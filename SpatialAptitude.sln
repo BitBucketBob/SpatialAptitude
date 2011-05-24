@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JaynesCubes", "JaynesCubes\JaynesCubes.vcproj", "{6718D7C2-112E-41BC-9882-E7175A1362DE}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "JaynesCubes_Install", "JaynesCubes\JaynesCubes_Install\JaynesCubes_Install.vdproj", "{4E04EC10-7F37-4318-AF68-9FA83D399F61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Debug|Win32.Build.0 = Debug|Win32
+		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Release|Win32.ActiveCfg = Release|Win32
+		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Release|Win32.Build.0 = Release|Win32
+		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Debug|Win32.ActiveCfg = Debug
+		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Debug|Win32.Build.0 = Debug
+		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Release|Win32.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
