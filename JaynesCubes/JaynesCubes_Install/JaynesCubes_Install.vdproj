@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_154A522C5C944EC0A64FF0E5D4EA9536"
+        "OwnerKey" = "8:_455B9FF190244BD289C96E053F7E3E2A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1FE331EBA6234E67B56C76C9D189D6D8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -77,6 +83,12 @@
         {
         "MsmKey" = "8:_40851D9EA1C945A58CB69ABCE4B812AC"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_455B9FF190244BD289C96E053F7E3E2A"
+        "OwnerKey" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -197,12 +209,6 @@
         {
         "MsmKey" = "8:_928D3A59E9AF408195499FB7D28E1DC6"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_95BF16E5DC3043289BA8380F6B7A80C1"
-        "OwnerKey" = "8:_E2682B47A0794E279DFB7BDB51EBF4ED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -339,12 +345,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E2682B47A0794E279DFB7BDB51EBF4ED"
-        "OwnerKey" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E548202A2CD7412BAD0A97F66B1380ED"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -424,6 +424,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -1640,7 +1653,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:BitBucketBob"
+        "Manufacturer" = "8:SpatialAptitude"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://www.bitbucketbob.com"
         "Title" = "8:JaynesCubes"
@@ -1649,7 +1662,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:SpatialAptitude"
         "ARPURLINFOABOUT" = "8:http://www.bitbucketbob.com"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_CDBA5ED13DD04310AA6F92FF192F32FE"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1754,7 +1767,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_54C20917F1AC418D861DC55884F1D5A2"
             {
-            "Name" = "8:Shortcut to Primary Output from JaynesCubes (Active)"
+            "Name" = "8:JaynesCubes"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -1768,7 +1781,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B4615EEBA70C410CAABDAF5D4EC5C37F"
             {
-            "Name" = "8:Shortcut to Primary Output from JaynesCubes (Active)"
+            "Name" = "8:JaynesCubes"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -2176,7 +2189,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_95BF16E5DC3043289BA8380F6B7A80C1"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_154A522C5C944EC0A64FF0E5D4EA9536"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2190,7 +2203,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E2682B47A0794E279DFB7BDB51EBF4ED"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_455B9FF190244BD289C96E053F7E3E2A"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

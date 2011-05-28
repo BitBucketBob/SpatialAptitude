@@ -1,3 +1,18 @@
+/* HelpForm.h - header file for help display */
+
+/* Copyright (C) 2011 SW Shackelford *
+
+/*
+modification history
+--------------------
+01jun05,sws	Original hack.
+27may11,sws	Converted from VCPP .NET 2003 to 2008
+*/
+
+/*
+DESCRIPTION:
+*/
+
 #pragma once
 
 using namespace System;
@@ -22,19 +37,18 @@ namespace JaynesCubes
 	{
 	public: 
 		HelpForm(void)
-		{
+			{
 			InitializeComponent();
 			tbHelp->Select(0, 0);
-		}
+			}
         
 	protected: 
 		~HelpForm()
-		{
-			if (components)
 			{
+			if (components)
 				delete components;
 			}
-		}
+
 	private: System::Windows::Forms::TextBox ^  tbHelp;
 	private: System::Windows::Forms::Button ^  pbOK;
 
@@ -83,12 +97,16 @@ namespace JaynesCubes
 			this->Name = "HelpForm";
 			this->Text = "HelpForm";
 			this->ResumeLayout(false);
+		}	
 
-		}		
 	private: System::Void pbOK_Click(System::Object ^sender, System::EventArgs ^ e)
 			 {
 			 Close();
 			 }
-
 	};
 }
+
+/******************************************************************************
+                               END OF MODULE
+******************************************************************************/
+

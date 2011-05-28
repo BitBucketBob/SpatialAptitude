@@ -210,10 +210,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\HelpForm.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\JMCube.cpp"
 				>
 			</File>
