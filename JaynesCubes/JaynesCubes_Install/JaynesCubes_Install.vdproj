@@ -165,12 +165,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7FCBAD4F271245BDB0ADBB6B6045EC2C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8724F9FA700A463790C2AAF7248E0897"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -207,6 +201,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_95BF16E5DC3043289BA8380F6B7A80C1"
+        "OwnerKey" = "8:_E2682B47A0794E279DFB7BDB51EBF4ED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_964EF71A632E465189058C8B14D928A0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -232,6 +232,12 @@
         "Entry"
         {
         "MsmKey" = "8:_A2199B3FF0BF4231954732494D70B663"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -303,6 +309,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CDBA5ED13DD04310AA6F92FF192F32FE"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D14B02C45E9A4CF99C10204E311020C4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -327,6 +339,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E2682B47A0794E279DFB7BDB51EBF4ED"
+        "OwnerKey" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E548202A2CD7412BAD0A97F66B1380ED"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -346,7 +364,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7FCBAD4F271245BDB0ADBB6B6045EC2C"
+        "OwnerKey" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -399,6 +417,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -928,37 +954,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7FCBAD4F271245BDB0ADBB6B6045EC2C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:JaynesCubes, Version=1.0.4159.32389, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_7FCBAD4F271245BDB0ADBB6B6045EC2C"
-                    {
-                    "Name" = "8:JaynesCubes.exe"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Debug\\JaynesCubes.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_5B19BBE435FA4BBCBA6FC1775C426693"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8724F9FA700A463790C2AAF7248E0897"
             {
             "SourcePath" = "8:..\\Bitmaps\\Face2.bmp"
@@ -1399,6 +1394,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CDBA5ED13DD04310AA6F92FF192F32FE"
+            {
+            "SourcePath" = "8:..\\JaynesCubes.ico"
+            "TargetName" = "8:JaynesCubes.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_9F0B9034958E4CEAA2E0226CC6654300"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D14B02C45E9A4CF99C10204E311020C4"
             {
             "SourcePath" = "8:..\\Bitmaps\\Face12.bmp"
@@ -1618,7 +1633,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:JaynesCubes"
         "ProductCode" = "8:{18C458B5-6777-4FB2-8386-ED9E28E31828}"
-        "PackageCode" = "8:{63C44535-6269-42E4-99A9-82E113C12A0F}"
+        "PackageCode" = "8:{D3EE5B43-D528-41C6-A544-5A513D57F6EC}"
         "UpgradeCode" = "8:{8281EF8D-8D5A-4DC0-A494-9CF2BA575FBF}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1633,7 +1648,7 @@
         "ARPCONTACT" = "8:BitBucketBob"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:SpatialAptitude"
-        "ARPURLINFOABOUT" = "8:"
+        "ARPURLINFOABOUT" = "8:http://www.bitbucketbob.com"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
@@ -1737,32 +1752,32 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_86B90FAB8BAE4B8EB9904CE88A690A8E"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_54C20917F1AC418D861DC55884F1D5A2"
             {
-            "Name" = "8:JaynesCubes.exe"
+            "Name" = "8:Shortcut to Primary Output from JaynesCubes (Active)"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
             "IconIndex" = "3:0"
             "Transitive" = "11:FALSE"
-            "Target" = "8:_7FCBAD4F271245BDB0ADBB6B6045EC2C"
-            "Folder" = "8:_CA7E540C5BE347E89C02E3F91A37D6C5"
-            "WorkingFolder" = "8:_5B19BBE435FA4BBCBA6FC1775C426693"
-            "Icon" = "8:"
-            "Feature" = "8:"
-            }
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F9B59F7E480A4B4DA0A5BD301EEBAABA"
-            {
-            "Name" = "8:JaynesCubes.exe"
-            "Arguments" = "8:"
-            "Description" = "8:"
-            "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
-            "Transitive" = "11:FALSE"
-            "Target" = "8:_7FCBAD4F271245BDB0ADBB6B6045EC2C"
+            "Target" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
             "Folder" = "8:_5107E6A5AFE54E369092A062BE165649"
             "WorkingFolder" = "8:_5B19BBE435FA4BBCBA6FC1775C426693"
-            "Icon" = "8:"
+            "Icon" = "8:_CDBA5ED13DD04310AA6F92FF192F32FE"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_B4615EEBA70C410CAABDAF5D4EC5C37F"
+            {
+            "Name" = "8:Shortcut to Primary Output from JaynesCubes (Active)"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_A24B306EC2624E54B0DA18B7A68BC8E2"
+            "Folder" = "8:_CA7E540C5BE347E89C02E3F91A37D6C5"
+            "WorkingFolder" = "8:_5B19BBE435FA4BBCBA6FC1775C426693"
+            "Icon" = "8:_CDBA5ED13DD04310AA6F92FF192F32FE"
             "Feature" = "8:"
             }
         }
@@ -2161,9 +2176,65 @@
         }
         "MergeModule"
         {
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_95BF16E5DC3043289BA8380F6B7A80C1"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:microsoft_vc90_crt_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E2682B47A0794E279DFB7BDB51EBF4ED"
+            {
+            "UseDynamicProperties" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "SourcePath" = "8:policy_9_0_Microsoft_VC90_CRT_x86.msm"
+                "Properties"
+                {
+                }
+            "LanguageId" = "3:0"
+            "Exclude" = "11:FALSE"
+            "Folder" = "8:"
+            "Feature" = "8:"
+            "IsolateTo" = "8:"
+            }
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A24B306EC2624E54B0DA18B7A68BC8E2"
+            {
+            "SourcePath" = "8:..\\Release\\JaynesCubes.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_5B19BBE435FA4BBCBA6FC1775C426693"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{6718D7C2-112E-41BC-9882-E7175A1362DE}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
         }
     }
 }

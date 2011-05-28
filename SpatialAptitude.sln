@@ -16,7 +16,6 @@ Global
 		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Release|Win32.ActiveCfg = Release|Win32
 		{6718D7C2-112E-41BC-9882-E7175A1362DE}.Release|Win32.Build.0 = Release|Win32
 		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Debug|Win32.ActiveCfg = Debug
-		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Debug|Win32.Build.0 = Debug
 		{4E04EC10-7F37-4318-AF68-9FA83D399F61}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

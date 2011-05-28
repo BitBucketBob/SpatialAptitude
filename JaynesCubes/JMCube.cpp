@@ -1,12 +1,27 @@
+/* JMCube.cpp - implementation file for cube face manager */
+
+/* Copyright (C) 2011 SW Shackelford */
+
+/*
+modification history
+--------------------
+01jun05,sws	Original hack.
+27may11,sws	Converted from VCPP .NET 2003 to 2008
+*/
+
+/*
+DESCRIPTION:
+
+This module manages the display and construction of cube faces used to
+challenge the user.
+*/
+
 #include "StdAfx.h"
 #include "JMCube.h"
 
-extern Double GAlpha;
-extern Double GBeta;
-extern Double GGamma;
-
 /*****************************************************************************
-* SCubeRules - constructor
+*
+* SCubeRules::SCubeRules - constructor
 *
 * This constructor initializes all of the rules that govern the assembly of
 * each of the six faces of a cube into a flattened out unfolded construction.
@@ -15,6 +30,7 @@ extern Double GGamma;
 */
 CJMCube::SCubeRules::SCubeRules()
 	{
+
 	// Allocate arrays
 
 	mate     = gcnew cli::array<System::Int32, 2>(NUM_FACES, NUM_EDGES); // Mating face
@@ -172,34 +188,35 @@ CJMCube::SCubeRules::SCubeRules()
 	}
 
 /*****************************************************************************
-* CJMCube - constructs the views
+*
+* CJMCube::CJMCube - constructs the views
 *
 * RETURNS: NA
 */
 CJMCube::CJMCube
 	(
 	System::String ^ dir, 
-	System::Drawing::Graphics ^ gr) : m_dir(dir), m_gr(gr)
+	System::Drawing::Graphics ^ gr) : m_bitmapDir(dir), m_gr(gr)
 	{
 	rnd          = gcnew System::Random();     // Random number generator
-	System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder("");
-	m_seedList   = gcnew cli::array<Bitmap ^, 2>(NUM_CHOICES, NUM_FACES);
-	m_ringerList = gcnew cli::array<Bitmap ^>(2);
+	m_seedList   = gcnew cli::array<System::Drawing::Bitmap ^, 2>(NUM_CHOICES, NUM_FACES);
+	m_ringerList = gcnew cli::array<System::Drawing::Bitmap ^>(2);
 	m_cubeRules  = gcnew SCubeRules;
 
 	if (!GetBmpFiles())
 		return;
 
-	Int32	i;
-	Int32	j;
-	Int32	flawMode;
-	Int32	rotation;
+	System::Int32	i;
+	System::Int32	j;
+	System::Int32	flawMode;
+	System::Int32	rotation;
 
 	// Randomly reorient the faces of the seed input faces
 
 	for (i = 0; i < NUM_SEED; i++)
 		{
-		rotation = (static_cast<Int32> (96 * rnd->NextDouble())) % NUM_EDGES;
+		rotation = (System::Int32(96 * rnd->NextDouble())) % NUM_EDGES;
+
 		switch (rotation)
 			{
 			case ROT_90:
@@ -222,19 +239,20 @@ CJMCube::CJMCube
 		for (j = 1; j < NUM_CHOICES; j++)
 			m_seedList[j, i] = m_seedList[0, i]->Clone
 				(
-				RectangleF
+				System::Drawing::RectangleF
 					(
 					0, 0, 
-					static_cast<float> (m_seedList[0, i]->Width), 
-					static_cast<float> (m_seedList[0, i]->Height)
+					System::Single(m_seedList[0, i]->Width), 
+					System::Single(m_seedList[0, i]->Height)
 					),
-				Imaging::PixelFormat::DontCare
+
+				System::Drawing::Imaging::PixelFormat::DontCare
 				);
 		}
 	
 	// Randomly select one of the set of cube faces to be the answer
 
-	m_answer = (static_cast<Int32> (100 * rnd->NextDouble())) % NUM_CHOICES;
+	m_answer = (System::Int32(100 * rnd->NextDouble())) % NUM_CHOICES;
 
 	// Scramble all of the cube face sets except for the one selected as
 	// the answer
@@ -244,7 +262,7 @@ CJMCube::CJMCube
 		if (i == m_answer)
 			continue;
 
-		flawMode = (static_cast<Int32> (96 * rnd->NextDouble())) % NUM_MODES;
+		flawMode = (System::Int32(96 * rnd->NextDouble())) % NUM_MODES;
 		ScrambleUnfoldedView(i, flawMode);
 		}
 
@@ -273,22 +291,25 @@ CJMCube::CJMCube
 	}
 
 /*****************************************************************************
-* GetBmpFiles - retrieve a set of bitmap cube faces
 *
-* RETURNS: NA
+* GetBmpFiles::GetBmpFiles - retrieve a set of bitmap cube faces
+*
+* RETURNS: TRUE if successful, otherwise FALSE
 */
-Boolean CJMCube::GetBmpFiles()
+System::Boolean CJMCube::GetBmpFiles()
 	{
-	ArrayList ^		fileList = gcnew ArrayList();
-	Int32			i;
+	System::Collections::ArrayList ^ fileList = gcnew System::Collections::ArrayList();
+	System::Int32 i;
+	System::Int32 pos;
 
-	cli::array<System::String ^> ^ files = Directory::GetFiles(BITMAP_DIR);
+	cli::array<System::String ^> ^ files = System::IO::Directory::GetFiles(m_bitmapDir);
 
 	for (i = 0; i < files->Length; i++)
 		{
-		System::IO::FileInfo ^ fci = gcnew FileInfo(files[i]->ToString());
+		System::IO::FileInfo ^ fci = gcnew System::IO::FileInfo(files[i]->ToString());
 		System::String ^ fileName = fci->Name->ToLower();
-		int pos = fileName->IndexOf(".bmp", 0, fileName->Length);
+		pos = fileName->IndexOf(".bmp", 0, fileName->Length);
+
 		if (pos >= 0)
 			fileList->Add(fileName);
 		}
@@ -301,8 +322,8 @@ Boolean CJMCube::GetBmpFiles()
 
 	for (i = 0; i < NUM_FACES; i++)
 		{
-		Int32 pick = (static_cast<Int32> (10 * fileList->Count * rnd->NextDouble())) % fileList->Count;
-		System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder(BITMAP_DIR);
+		System::Int32 pick = (System::Int32(10 * fileList->Count * rnd->NextDouble())) % fileList->Count;
+		System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder(m_bitmapDir);
 		sb->Append(safe_cast<System::String ^>(fileList[pick]));
 		m_seedList[0, i] = gcnew System::Drawing::Bitmap(sb->ToString());
 		fileList->RemoveAt(pick);
@@ -310,8 +331,8 @@ Boolean CJMCube::GetBmpFiles()
 
 	for (i = 0; i < 2; i++)
 		{
-		Int32 pick = (static_cast<Int32> (10 * fileList->Count * rnd->NextDouble())) % fileList->Count;
-		System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder(BITMAP_DIR);
+		System::Int32 pick = (System::Int32(10 * fileList->Count * rnd->NextDouble())) % fileList->Count;
+		System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder(m_bitmapDir);
 		sb->Append(safe_cast<System::String ^> (fileList[pick]));
 		m_ringerList[i] = gcnew System::Drawing::Bitmap(sb->ToString());
 		fileList->RemoveAt(pick);
@@ -321,7 +342,8 @@ Boolean CJMCube::GetBmpFiles()
 	};
 
 /*****************************************************************************
-* UnfoldedView - displays the unfolded cube in random orientation and layout
+*
+* UnfoldedView::ConstructUnfoldedView - displays randomized unfolded cube
 *
 * The input cube faces are randomized in terms of their orientation and layout
 * but the correct edge to edge mapping of the cube faces remains correct.  The
@@ -329,16 +351,21 @@ Boolean CJMCube::GetBmpFiles()
 *
 * RETURNS: NA
 */
-void CJMCube::ConstructUnfoldedView(Int32 x, Int32 y, Int32 choice)
+void CJMCube::ConstructUnfoldedView
+	(
+	System::Int32 x, 
+	System::Int32 y, 
+	System::Int32 choice
+	)
 	{
-	ArrayList ^ workList = gcnew ArrayList();  // Working array
-	ArrayList ^ faceList = gcnew ArrayList();  // Status of picked faces
-	ArrayList ^ showList = gcnew ArrayList();
-	Int32		edgeMap  = 0;
-	Int32		faceMap  = 0;
-	Int32		i;
-	Int32		face;
-	Int32		pick;
+	System::Collections::ArrayList ^ workList = gcnew System::Collections::ArrayList();  // Working array
+	System::Collections::ArrayList ^ faceList = gcnew System::Collections::ArrayList();  // Status of picked faces
+	System::Collections::ArrayList ^ showList = gcnew System::Collections::ArrayList();
+	System::Int32	edgeMap  = 0;
+	System::Int32	faceMap  = 0;
+	System::Int32	i;
+	System::Int32	face;
+	System::Int32	pick;
 
 	cli::array<System::Drawing::Bitmap ^> ^ newList = gcnew cli::array<System::Drawing::Bitmap ^>(NUM_FACES);
 
@@ -348,16 +375,17 @@ void CJMCube::ConstructUnfoldedView(Int32 x, Int32 y, Int32 choice)
 		{
 		workList->Add(m_seedList[choice, i]->Clone
 			(
-			RectangleF
+			System::Drawing::RectangleF
 				(
 				0, 0, 
-				static_cast<float> (m_seedList[choice, i]->Width), 
-				static_cast<float> (m_seedList[choice, i]->Height)
+				System::Single(m_seedList[choice, i]->Width), 
+				System::Single(m_seedList[choice, i]->Height)
 				),
-			Imaging::PixelFormat::DontCare)
+
+				System::Drawing::Imaging::PixelFormat::DontCare)
 			);
 
-		faceList->Add(Int32(i));
+		faceList->Add(System::Int32(i));
 		}
 
 	// Randomly select faces and edges to be appended to selection item
@@ -370,8 +398,9 @@ void CJMCube::ConstructUnfoldedView(Int32 x, Int32 y, Int32 choice)
 
 		while (true)
 			{
-			pick = ((int) (96 * rnd->NextDouble())) % faceList->Count;
-			face = safe_cast<Int32>(faceList[pick]);
+			pick = (System::Int32(96 * rnd->NextDouble())) % faceList->Count;
+			face = safe_cast<System::Int32>(faceList[pick]);
+
 			if ((faceMap ^ m_cubeRules->faceBits[face]) != 0)
 				{
 				faceList->RemoveAt(pick);        // Remove selected face from list
@@ -388,16 +417,18 @@ void CJMCube::ConstructUnfoldedView(Int32 x, Int32 y, Int32 choice)
 		do
 			{
 			ta->edge = ((int) (96 * rnd->NextDouble())) % NUM_EDGES;
-			int chkBit = m_cubeRules->edgeBit[face, ta->edge];
+			System::Int32 chkBit = m_cubeRules->edgeBit[face, ta->edge];
+
 			if ((chkBit & edgeMap) != 0)
 				break;
+
 			} while (showList->Count > 0);
 
 		edgeMap |= m_cubeRules->edgeBits[face];  // Update included edges
 
 		ta->x    = x;
 		ta->y    = y;
-		ta->bmp  = safe_cast<System::Drawing::Bitmap ^> (workList[face]);
+		ta->bmp  = safe_cast<System::Drawing::Bitmap ^>(workList[face]);
 		showList->Add(ta);
 		}
 		
@@ -409,20 +440,32 @@ void CJMCube::ConstructUnfoldedView(Int32 x, Int32 y, Int32 choice)
 
 /*****************************************************************************
 *
+* UnfoldedView::ConstructFoldedView - displays randomized folded cube
+*
+* The input cube faces are randomized in terms of their orientation and layout
+* but the correct edge to edge mapping of the cube faces remains correct.  The
+* resulting image is then drawn centered relative to the input XY-coordinates.
+*
+* RETURNS: NA
 */
-void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
+void CJMCube::ConstructFoldedView
+	(
+	System::Int32 xPos, 
+	System::Int32 yPos, 
+	System::Int32 choice
+	)
 	{
-	Bitmap ^	bmpA = m_seedList[choice, 0];
-	Bitmap ^	bmpB = m_seedList[choice, 1];
-	Bitmap ^	bmpC = m_seedList[choice, 2];
+	System::Drawing::Bitmap ^ bmpA = m_seedList[choice, 0];
+	System::Drawing::Bitmap ^ bmpB = m_seedList[choice, 1];
+	System::Drawing::Bitmap ^ bmpC = m_seedList[choice, 2];
 	System::Drawing::Bitmap ^ bmp  = gcnew System::Drawing::Bitmap(W_MAX, H_MAX);
-	cli::array<Double, 2> ^ T = gcnew cli::array<Double, 2>(3,4);
-	cli::array<Double, 2> ^ angles = gcnew cli::array<Double, 2>(10, 3);
-	Double		u;
-	Double		v;
-	Double		scale;
+	cli::array<System::Double, 2> ^ T = gcnew cli::array<System::Double, 2>(3,4);
+	cli::array<System::Double, 2> ^ angles = gcnew cli::array<System::Double, 2>(10, 3);
+	System::Double	u;
+	System::Double	v;
+	System::Double	scale;
 
-	Int32 pick = ((static_cast<Int32> (100 * rnd->NextDouble())) % 10);
+	System::Int32 pick = ((System::Int32(100 * rnd->NextDouble())) % 10);
 
 	angles[0,0] = 30;
 	angles[0,1] = 30;
@@ -464,9 +507,9 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 	angles[9,1] = 45;
 	angles[9,2] = 60;
 
-	Double		alpha = angles[pick, 0] * Math::PI / 180;
-	Double		beta  = angles[pick, 1] * Math::PI / 180;
-	Double		gamma = angles[pick, 2] * Math::PI / 180;
+	System::Double	alpha = angles[pick, 0] * Math::PI / 180;
+	System::Double	beta  = angles[pick, 1] * Math::PI / 180;
+	System::Double	gamma = angles[pick, 2] * Math::PI / 180;
 
 	T[0,0] = Math::Cos(alpha) * Math::Cos(beta);
 	T[0,1] = Math::Cos(alpha) * Math::Sin(beta) * Math::Sin(gamma) - Math::Sin(alpha) * Math::Cos(gamma);
@@ -481,26 +524,26 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 	T[2,2] = Math::Cos(beta) * Math::Cos(gamma);
 	T[2,3] = F_LENGTH;
 
-	int w;
-	int h;
+	System::Int32 w;
+	System::Int32 h;
 	w = bmpA->Width;
 	h = bmpA->Height;
 
-	bmpA->RotateFlip(Drawing::RotateFlipType::Rotate270FlipNone);
-	bmpB->RotateFlip(Drawing::RotateFlipType::Rotate270FlipNone);
-	bmpC->RotateFlip(Drawing::RotateFlipType::Rotate180FlipNone);
+	bmpA->RotateFlip(System::Drawing::RotateFlipType::Rotate270FlipNone);
+	bmpB->RotateFlip(System::Drawing::RotateFlipType::Rotate270FlipNone);
+	bmpC->RotateFlip(System::Drawing::RotateFlipType::Rotate180FlipNone);
 
-	int i;
-	int j;
-	int x;
-	int y;
+	System::Int32 i;
+	System::Int32 j;
+	System::Int32 x;
+	System::Int32 y;
 
-	Color	c;
-	Color	chk = bmpA->GetPixel(0, 0);
+	System::Drawing::Color	c;
+	System::Drawing::Color	chk = bmpA->GetPixel(0, 0);
 
 	for (i = 0; i < 260; i++)
 		for (j = 0; j < 260; j++)
-			bmp->SetPixel(i, j, Drawing::Color::Black);
+			bmp->SetPixel(i, j, System::Drawing::Color::Black);
 
 	for (i = 0; i < w; i++)
 		for (j = 0; j < h; j++)
@@ -510,15 +553,17 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 			scale = i * T[2,0] + j * T[2,1] + 0 * T[2,2] + T[2,3];
 			u *= F_LENGTH;
 			v *= F_LENGTH;
-			x = static_cast<Int32> (u / scale);
-			y = static_cast<Int32> (v / scale);
+			x = System::Int32(u / scale);
+			y = System::Int32(v / scale);
+
 			if ((x < 1) || (x > (W_MAX - 2))) continue;
 			if ((y < 1) || (y > (H_MAX - 2))) continue;
-			bmp->SetPixel(x, y, Drawing::Color::White);
-			bmp->SetPixel(x + 1, y, Drawing::Color::White);
-			bmp->SetPixel(x - 1, y, Drawing::Color::White);
-			bmp->SetPixel(x, y + 1, Drawing::Color::White);
-			bmp->SetPixel(x, y - 1, Drawing::Color::White);
+
+			bmp->SetPixel(x, y, System::Drawing::Color::White);
+			bmp->SetPixel(x + 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x - 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x, y + 1, System::Drawing::Color::White);
+			bmp->SetPixel(x, y - 1, System::Drawing::Color::White);
 			}
 
 	for (i = 0; i < w; i++)
@@ -534,11 +579,11 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 				v *= F_LENGTH;
 				u /= scale;
 				v /= scale;
+
 				if ((u < 0) || (u > (W_MAX - 1))) continue;
 				if ((v < 0) || (v > (H_MAX - 1))) continue;
-				bmp->SetPixel(static_cast<Int32> (u),
-							static_cast<Int32> (v),
-							c);
+
+				bmp->SetPixel(System::Int32(u), System::Int32(v), c);
 				}
 			}
 
@@ -550,15 +595,17 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 			scale = w * T[2,0] + j * T[2,1] + i * T[2,2] + T[2,3];
 			u *= F_LENGTH;
 			v *= F_LENGTH;
-			x = static_cast<Int32> (u / scale);
-			y = static_cast<Int32> (v / scale);
+			x = static_cast<System::Int32> (u / scale);
+			y = static_cast<System::Int32> (v / scale);
+
 			if ((x < 1) || (x > (W_MAX - 2))) continue;
 			if ((y < 1) || (y > (H_MAX - 2))) continue;
-			bmp->SetPixel(x, y, Drawing::Color::White);
-			bmp->SetPixel(x + 1, y, Drawing::Color::White);
-			bmp->SetPixel(x - 1, y, Drawing::Color::White);
-			bmp->SetPixel(x, y + 1, Drawing::Color::White);
-			bmp->SetPixel(x, y - 1, Drawing::Color::White);
+
+			bmp->SetPixel(x, y, System::Drawing::Color::White);
+			bmp->SetPixel(x + 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x - 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x, y + 1, System::Drawing::Color::White);
+			bmp->SetPixel(x, y - 1, System::Drawing::Color::White);
 			}
 
 	for (i = 0; i < w; i++)
@@ -574,11 +621,11 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 				v *= F_LENGTH;
 				u /= scale;
 				v /= scale;
+
 				if ((u < 0) || (u > (W_MAX - 1))) continue;
 				if ((v < 0) || (v > (H_MAX - 1))) continue;
-				bmp->SetPixel(static_cast<Int32> (u),
-							static_cast<Int32> (v),
-							c);
+
+				bmp->SetPixel(System::Int32(u), System::Int32(v), c);
 				}
 			}
 
@@ -590,15 +637,17 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 			scale = i * T[2,0] + 0 * T[2,1] + j * T[2,2] + T[2,3];
 			u *= F_LENGTH;
 			v *= F_LENGTH;
-			x = static_cast<Int32> (u / scale);
-			y = static_cast<Int32> (v / scale);
+			x = static_cast<System::Int32> (u / scale);
+			y = static_cast<System::Int32> (v / scale);
+
 			if ((x < 1) || (x > (W_MAX - 2))) continue;
 			if ((y < 1) || (y > (H_MAX - 2))) continue;
-			bmp->SetPixel(x, y, Drawing::Color::White);
-			bmp->SetPixel(x + 1, y, Drawing::Color::White);
-			bmp->SetPixel(x - 1, y, Drawing::Color::White);
-			bmp->SetPixel(x, y + 1, Drawing::Color::White);
-			bmp->SetPixel(x, y - 1, Drawing::Color::White);
+
+			bmp->SetPixel(x, y, System::Drawing::Color::White);
+			bmp->SetPixel(x + 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x - 1, y, System::Drawing::Color::White);
+			bmp->SetPixel(x, y + 1, System::Drawing::Color::White);
+			bmp->SetPixel(x, y - 1, System::Drawing::Color::White);
 			}
 
 	for (i = 0; i < w; i++)
@@ -616,80 +665,37 @@ void CJMCube::ConstructFoldedView(Int32 xPos, Int32 yPos, Int32 choice)
 				v /= scale;
 				if ((u < 0) || (u > (W_MAX - 1))) continue;
 				if ((v < 0) || (v > (H_MAX - 1))) continue;
-				bmp->SetPixel(static_cast<Int32> (u),
-							static_cast<Int32> (v),
-							c);
+				bmp->SetPixel(System::Int32(u), System::Int32(v), c);
 				}
 			}
 
-#	ifdef NEVER
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			bmp->SetPixel(i, j + (H_MAX - h), Drawing::Color::White);
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			{
-			x = (int) (i + 0.8 * (h - j) * Math::Cos(Math::PI / 6));
-			y = (int) ((H_MAX - h) - 0.8 * (h - j) * Math::Sin(Math::PI / 6));
-			bmp->SetPixel(x, y, Drawing::Color::White);
-			}
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			{
-			x = (int) (w + 0.8 * i * Math::Cos(Math::PI / 6));
-			y = (int) ((H_MAX - h) + j - 0.8 * i * Math::Sin(Math::PI / 6));
-			bmp->SetPixel(x, y, Drawing::Color::White);
-			}
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			bmp->SetPixel(i, j + (H_MAX - h), bmpA->GetPixel(i, j));
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			{
-			x = (int) (i + 0.8 * (h - j) * Math::Cos(Math::PI / 6));
-			y = (int) ((H_MAX - h) - 0.8 * (h - j) * Math::Sin(Math::PI / 6));
-			c = bmpC->GetPixel(i, j);
-			if (c == chk)
-				bmp->SetPixel(x, y, bmpC->GetPixel(i, j));
-			}
-
-	for (i = 0; i < w; i++)
-		for (j = 0; j < h; j++)
-			{
-			x = (int) (w + 0.8 * i * Math::Cos(Math::PI / 6));
-			y = (int) ((H_MAX - h) + j - 0.8 * i * Math::Sin(Math::PI / 6));
-			c = bmpB->GetPixel(i, j);
-			if (c == chk)
-				bmp->SetPixel(x, y, bmpB->GetPixel(i, j));
-			}
-#	endif
-
 	m_gr->DrawImage(bmp, xPos, yPos);
 
-	Drawing::Pen ^ p = gcnew Drawing::Pen(Color::Red, 2);
+	System::Drawing::Pen ^ p = gcnew System::Drawing::Pen(System::Drawing::Color::Red, 2);
 	m_gr->DrawRectangle(p, xPos, yPos, 260, 260);
-
 	}
 
 /*****************************************************************************
 *
+* UnfoldedView::ShowUnfoldedView - displays instance of unfolded cube
+*
+* RETURNS: NA
 */
-void CJMCube::ShowUnfoldedView(ArrayList ^ ufCube)
+void CJMCube::ShowUnfoldedView
+	(
+	ArrayList ^ ufCube
+	)
 	{
-	Int32		i;
-	Int32		j;
-	Int32		xCenter;
-	Int32		yCenter;
-	Int32		xAdjust;
-	Int32		yAdjust;
-	Int32		xMin;
-	Int32		xMax;
-	Int32		yMin;
-	Int32		yMax;
+	System::Int32	i;
+	System::Int32	j;
+	System::Int32	xCenter;
+	System::Int32	yCenter;
+	System::Int32	xAdjust;
+	System::Int32	yAdjust;
+	System::Int32	xMin;
+	System::Int32	xMax;
+	System::Int32	yMin;
+	System::Int32	yMax;
 
 	cli::array<System::Int32> ^ rotation = gcnew cli::array<System::Int32>(NUM_FACES);
 	cli::array<RotateFlipType> ^ rotFlip = gcnew cli::array<RotateFlipType>(NUM_EDGES);
@@ -740,6 +746,7 @@ void CJMCube::ShowUnfoldedView(ArrayList ^ ufCube)
 	for (i = 1; i < NUM_FACES; i++)
 		{
 		face = safe_cast<SAssembly ^> (ufCube[i]);
+
 		for (j = 0; j < i; j++)
 			{
 			mate = safe_cast<SAssembly ^> (ufCube[j]);
@@ -783,14 +790,16 @@ void CJMCube::ShowUnfoldedView(ArrayList ^ ufCube)
 		if (face->y < yMin) yMin = face->y;
 		}
 
-	Drawing::SolidBrush ^ b = gcnew Drawing::SolidBrush(Color::Black);
+	System::Drawing::SolidBrush ^ b = gcnew System::Drawing::SolidBrush(Color::Black);
+
 	m_gr->FillRectangle(b, 
 		xCenter - (5 * face->bmp->Width) /2 , 
 		yCenter - (5 * face->bmp->Height) / 2,
 		5 * face->bmp->Width,
 		5 * face->bmp->Height);
 
-	Drawing::Pen ^ p = gcnew Drawing::Pen(Color::Red, 2);
+	System::Drawing::Pen ^ p = gcnew System::Drawing::Pen(Color::Red, 2);
+
 	m_gr->DrawRectangle(p, 
 		xCenter - (5 * face->bmp->Width) /2 , 
 		yCenter - (5 * face->bmp->Height) / 2,
@@ -810,16 +819,21 @@ void CJMCube::ShowUnfoldedView(ArrayList ^ ufCube)
 	}
 
 /*****************************************************************************
-* ScrambleUnfoldedView - generates an invalid combination of displayed faces
+*
+* CJMCube::ScrambleUnfoldedView - generates invalid combination of faces
 *
 * This function corrupts the selected set of cube faces passed in as "choice"
 * in accordance with the rule associated with "mode".
 *
 * RETURNS: NA
 */
-void CJMCube::ScrambleUnfoldedView(Int32 choice, Int32 mode)
+void CJMCube::ScrambleUnfoldedView
+	(
+	System::Int32 choice, 
+	System::Int32 mode
+	)
 	{
-	Bitmap ^ bmp;
+	System::Drawing::Bitmap ^ bmp;
 
 	switch(mode)
 		{

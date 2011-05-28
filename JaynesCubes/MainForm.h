@@ -1,3 +1,22 @@
+/* MainForm.h - header file for main display */
+
+/* Copyright (C) 2011 SW Shackelford *
+
+/*
+modification history
+--------------------
+01jun05,sws	Original hack.
+27may11,sws	Converted from VCPP .NET 2003 to 2008
+*/
+
+/*
+DESCRIPTION:
+
+This application challenges the user to correctly identify the correct unfolded
+box from a perspective view of a folded box and vice versa.  This type of
+challenge is common to spatial aptitude tests.
+*/
+
 #pragma once
 
 #include "JMCube.h"
@@ -26,19 +45,17 @@ namespace JaynesCubes
 	public ref class MainForm : public System::Windows::Forms::Form
 	{	
 	public:
-		MainForm(void)
-		{
+		MainForm()
+			{
 			InitializeComponent();
-		}
+			}
   
 	protected:
 		~MainForm()
-		{
-			if (components)
 			{
+			if (components)
 				delete components;
 			}
-		}
 
 	private: System::Windows::Forms::Button ^  Draw;
 	private: System::Windows::Forms::Button ^  SelectA;
@@ -49,12 +66,6 @@ namespace JaynesCubes
 	private: System::Windows::Forms::MainMenu^  msMain;
 	private: System::Windows::Forms::MenuItem^  msMainFile;
 	private: System::Windows::Forms::MenuItem^  msMainFileExit;
-
-
-
-
-
-
 	private: System::Windows::Forms::TextBox ^  TotalCount;
 	private: System::Windows::Forms::TextBox ^  CorrectCount;
 	private: System::Windows::Forms::TextBox ^  ErrorCount;
@@ -69,21 +80,14 @@ namespace JaynesCubes
 	private: System::Windows::Forms::TextBox ^  AverageTime;
 	private: System::Windows::Forms::MenuItem^  msMainActions;
 	private: System::Windows::Forms::MenuItem^  msMainActionsReset;
-
-
 	private: System::Windows::Forms::TextBox ^  Percent;
 	private: System::Windows::Forms::Label ^  label9;
 	private: System::Windows::Forms::MenuItem^  msMainActionsSetMode;
 	private: System::Windows::Forms::MenuItem^  msMainActionsSetModeFolded;
-
-
-
 	private: System::Windows::Forms::MenuItem^  msMainActionsSetModeUnfolded;
-
 	private: System::Windows::Forms::MenuItem^  msMainHelp;
 	private: System::Windows::Forms::MenuItem^  msMainHelpHelp;
 	private: System::Windows::Forms::MenuItem^  msMainHelpAbout;
-
 	private: System::ComponentModel::IContainer^  components;
 
 	private:
@@ -397,219 +401,39 @@ namespace JaynesCubes
 			this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MainForm::MainForm_Paint);
 			this->ResumeLayout(false);
 			this->PerformLayout();
-
 		}
 
 	private:
-		Int32		correctChoice;
-		bool		choiceMade;
-		bool		clockRunning;
-		Int32		totalCount;
-		Int32		correctCount;
-		Int32		errorCount;
-		DateTime	start;
+		System::Int32		correctChoice;
+		System::Boolean		choiceMade;
+		System::Boolean		clockRunning;
+		System::Int32		totalCount;
+		System::Int32		correctCount;
+		System::Int32		errorCount;
+		System::DateTime	start;
 
-	private:
-		System::Drawing::Color SetSelectionColor(Int32 choice)
-			{
-			Drawing::Color	retColor;
-
-			// If the clock is not running, then no use keeping score
-
-			if (!clockRunning)
-				return (System::Drawing::SystemColors::Control);
-
-			// Determing whether or not correct choice was made
-			// Update appropriate score (only one increment per display)
-
-			if (choice == correctChoice)
-				{
-				if (!choiceMade)
-					correctCount++;
-
-				retColor = Color::Green;
-				}
-			else
-				{
-				if (!choiceMade)
-					errorCount++;
-
-				retColor = Color::Red;
-				}
-
-			// If first choice for display, increment total count
-
-			if (!choiceMade)
-				{
-				totalCount++;
-				choiceMade = true;
-				}
-
-			// Update statistics
-
-			System::DateTime stop = DateTime::Now;
-			System::TimeSpan span = stop - start;
-			
-			System::Text::StringBuilder ^ sb = gcnew System::Text::StringBuilder("");
-			sb->AppendFormat("{0}:{1}:{2}", 
-				span.Hours, 
-				span.Minutes, 
-				span.Seconds);
-
-			ElapsedTime->Text  = sb->ToString();
-			AverageTime->Text  = (span.TotalSeconds / totalCount).ToString("00.00");
-			TotalCount->Text   = totalCount.ToString();
-			CorrectCount->Text = correctCount.ToString();
-			ErrorCount->Text   = errorCount.ToString();
-
-			Double percent = 100 * correctCount;
-			percent /= totalCount;
-			Percent->Text      = static_cast<Int32>(percent).ToString();
-		
-			return (retColor);
-			}
-
-	private: System::Void DrawCubes()
-		{
-		SelectA->BackColor = System::Drawing::SystemColors::Control;
-		SelectB->BackColor = System::Drawing::SystemColors::Control;
-		SelectC->BackColor = System::Drawing::SystemColors::Control;
-		SelectD->BackColor = System::Drawing::SystemColors::Control;
-		SelectE->BackColor = System::Drawing::SystemColors::Control;
-
-		Drawing::Graphics ^ gr = CreateGraphics();
-		CJMCube ^ cube = gcnew CJMCube(BITMAP_DIR, gr);
-		correctChoice = cube->GetAnswer();
-		}
-
-	private: System::Void Draw_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		// Reset button labels and colors
-
-		Draw->Text = "Next";
-		SelectA->Visible = true;
-		SelectB->Visible = true;
-		SelectC->Visible = true;
-		SelectD->Visible = true;
-		SelectE->Visible = true;
-
-		choiceMade = false;
-		
-		if (!clockRunning)
-			{
-			start = DateTime::Now;
-			clockRunning = true;
-			}
-
-		DrawCubes();
-		}
-
-	private: System::Void SelectA_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		SelectA->BackColor = SetSelectionColor(0);
-		}
-
-	private: System::Void SelectB_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		SelectB->BackColor = SetSelectionColor(1);
-		}
-
-	private: System::Void SelectC_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		SelectC->BackColor = SetSelectionColor(2);
-		}
-
-	private: System::Void SelectD_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		SelectD->BackColor = SetSelectionColor(3);
-		}
-
-	private: System::Void SelectE_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		SelectE->BackColor = SetSelectionColor(4);
-		}
-
-	private: System::Void FileMenuExit_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		Close();
-		}
-
-	/*************************************************************************
-	* ResetDisplay - helper function to reset display to startup condition
-	*/
-	private: System::Void ResetDisplay()
-		{
-		totalCount = 0;
-		errorCount = 0;
-		correctCount = 0;
-
-		TotalCount->Text   = totalCount.ToString();
-		CorrectCount->Text = correctCount.ToString();
-		ErrorCount->Text   = errorCount.ToString();
-		ElapsedTime->Text  = "";
-		AverageTime->Text  = "";
-		Percent->Text      = "";
-
-		Draw->Text = "Start";
-		SelectA->BackColor = System::Drawing::SystemColors::Control;
-		SelectB->BackColor = System::Drawing::SystemColors::Control;
-		SelectC->BackColor = System::Drawing::SystemColors::Control;
-		SelectD->BackColor = System::Drawing::SystemColors::Control;
-		SelectE->BackColor = System::Drawing::SystemColors::Control;
-
-		SelectA->Visible = false;
-		SelectB->Visible = false;
-		SelectC->Visible = false;
-		SelectD->Visible = false;
-		SelectE->Visible = false;
-
-		choiceMade = false;
-		clockRunning = false;
-		this->Invalidate();
-		}
-
-	private: System::Void MainForm_Load(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		this->Text = "Jayne's Cubes - Unfolded";
-		CJMCube::set_foldedMode(false);
-		ResetDisplay();
-		}
-
-	private: System::Void msMainActionsMenuReset_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		ResetDisplay();
-		}
-
-	private: System::Void msMainActionsSetModeFolded_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		this->Text = "Jayne's Cubes - Folded";
-		CJMCube::set_foldedMode(true);
-		ResetDisplay();
-		}
-
-	private: System::Void msMainActionsSetModeUnfolded_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		this->Text = "Jayne's Cubes - Unfolded";
-		CJMCube::set_foldedMode(false);
-		ResetDisplay();
-		}
-
-	private: System::Void msMainHelpHelp_Click(System::Object ^  sender, System::EventArgs ^  e)
-		{
-		HelpForm ^ helpForm = gcnew HelpForm;
-		helpForm->ShowDialog();
-		}
-
-	private: System::Void msMainHelpAbout_Click(System::Object^  sender, System::EventArgs^  e)
-		{
-		System::Windows::Forms::MessageBox::Show("Jayne's Cubes 2011-05-22");
-		}
-
-	private: System::Void MainForm_Paint(System::Object ^  sender, System::Windows::Forms::PaintEventArgs ^  e)
-		{
-		DrawCubes();
-		}
-};
+		System::Drawing::Color SetSelectionColor(System::Int32 choice);
+		System::Void MainForm::DrawCubes();
+		System::Void Draw_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void SelectA_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void SelectB_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void SelectC_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void SelectD_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void SelectE_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void FileMenuExit_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void ResetDisplay();
+		System::Void MainForm_Load(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void msMainActionsMenuReset_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void msMainActionsSetModeFolded_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void msMainActionsSetModeUnfolded_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void msMainHelpHelp_Click(System::Object ^ sender, System::EventArgs ^ e);
+		System::Void msMainHelpAbout_Click(System::Object ^ sender, System::EventArgs^ e);
+		System::Void MainForm_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e);
+	};
 }
+
+/******************************************************************************
+                               END OF MODULE
+******************************************************************************/
 
 
